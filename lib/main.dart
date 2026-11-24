@@ -1447,3 +1447,47 @@ class _AnimatedRankFrameState extends State<AnimatedRankFrame> with SingleTicker
     );
   }
 }
+class _RoyalFramePainter extends CustomPainter {
+  final Color mainColor;
+  final Color accentColor;
+  final int rank;
+  final double shimmer;
+
+  _RoyalFramePainter({
+    required this.mainColor,
+    required this.accentColor,
+    required this.rank,
+    required this.shimmer,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final rect = Rect.fromLTWH(10, 12, size.width - 20, size.height - 22);
+    final rrect = RRect.fromRectAndRadius(rect, const Radius.circular(16));
+    final borderPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = rank == 1 ? 4.5 : 3.5
+      ..shader = LinearGradient(
+        colors: [mainColor, Colors.white, accentColor, mainColor],
+        stops: [0.0, shimmer, (shimmer + 0.3).clamp(0.0, 1.0), 1.0],
+      ).createShader(rect);
+    canvas.drawRRect(rrect, borderPaint);
+
+    final crownPaint = Paint()..style = PaintingStyle.fill..color = mainColor;
+    final cx = size.width / 2;
+    const topY = 12.0;
+    final crownPath = Path()
+      ..moveTo(cx - 24, topY)
+      ..lineTo(cx - 32, topY - 10)
+      ..lineTo(cx - 12, topY - 5)
+      ..lineTo(cx, topY - 14)
+      ..lineTo(cx + 12, topY - 5)
+      ..lineTo(cx + 32, topY - 10)
+      ..lineTo(cx + 24, topY)
+      ..close();
+    canvas.drawPath(crownPath, crownPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _RoyalFramePainter oldDelegate) => true;
+}
