@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "814741135372",
+    "project_id": "starrankapps",
+    "storage_bucket": "starrankapps.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:814741135372:android:81be8639c7834a8c778e29",
+        "android_client_info": {
+          "package_name": "com.example.temp_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOadsmIQRFIkEZl4Wzs6WUdi5_cqWWRoc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
