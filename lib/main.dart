@@ -1447,13 +1447,3 @@ class _AnimatedRankFrameState extends State<AnimatedRankFrame> with SingleTicker
     );
   }
 }
-AnimatedRankFrame(
-  rank: index + 1,
-  size: 46,
-  child: Container(
-    color: const Color(0xFF1E2538),
-    child: (user['photoUrl'] != null && user['photoUrl'] != '')
-        ? Image.network(user['photoUrl'], fit: BoxFit.cover)
-        : Icon(Icons.person, color: primary),
-  ),
-),
