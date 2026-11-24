@@ -17,8 +17,22 @@ jobs:
           cp google-services.json android/app/google-services.json
       - run: flutter pub add firebase_core firebase_auth cloud_firestore google_sign_in
       - run: |
-          sed -i 's/id "com.android.application"/id "com.android.application"\n    id "com.google.gms.google-services"/' android/app/build.gradle.kts || sed -i 's/com.android.application/com.android.application"\n    id "com.google.gms.google-services/' android/app/build.gradle
-          sed -i 's/plugins {/plugins {\n    id "com.google.gms.google-services" version "4.4.2" apply false/' android/settings.gradle.kts || sed -i 's/plugins {/plugins {\n    id "com.google.gms.google-services" version "4.4.2" apply false/' android/settings.gradle
+          python3 -c '
+          import os
+          for p in ["android/settings.gradle.kts", "android/settings.gradle"]:
+              if os.path.exists(p):
+                  s = open(p).read()
+                  if "google-services" not in s:
+                      s = s.replace("plugins {", "plugins {\n    id(\"com.google.gms.google-services\") version \"4.4.2\" apply false")
+                      open(p, "w").write(s)
+          for p in ["android/app/build.gradle.kts", "android/app/build.gradle"]:
+              if os.path.exists(p):
+                  s = open(p).read()
+                  if "google-services" not in s:
+                      s = s.replace("id(\"com.android.application\")", "id(\"com.android.application\")\n    id(\"com.google.gms.google-services\")")
+                      s = s.replace("id \"com.android.application\"", "id \"com.android.application\"\n    id \"com.google.gms.google-services\"")
+                      open(p, "w").write(s)
+          '
       - run: keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android | grep SHA1 || true
       - run: flutter pub get
       - run: flutter build apk --debug
