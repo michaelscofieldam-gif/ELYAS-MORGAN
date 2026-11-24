@@ -10,6 +10,7 @@ jobs:
           channel: 'stable'
       - run: |
           flutter create temp_app
+          rm -rf temp_app/lib
           cp -r temp_app/* .
           cp temp_app/.metadata .
           rm -rf temp_app
@@ -19,4 +20,3 @@ jobs:
         with:
           name: StarRank-APK
           path: build/app/outputs/flutter-apk/app-release.apk
-          
